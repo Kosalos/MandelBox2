@@ -1,0 +1,125 @@
+MandelBox
+
+Algorithm copied from this excellent app: http://digitalfreepen.com/mandelbox370/
+
+The panel on the left holds two kinds of controls:
+buttons, and one or two dimensional widgets.
+
+Widgets:
+Slide your finger up and down the list to select
+the desired widget.  Its legend will turn Green.
+
+Now on the image,
+slider your finger to control the widget's parameters.
+
+Double tap on a widget legend to toggle it between
+fast and slow editing.  Red graph background = slow.
+
+Buttons:
+A button command is performed by selecting the
+legend, then releasing your finger.
+
+Note: Double Tap image to toggle display of control panel.
+Note: Swipe control panel up/down to move focus.
+
+A. "Res: High, Low"
+   Press this to toggle image resolution between Low and High.
+   Use Low resolution to quickly navigate to region of interest,
+   then switch to Hi for viewing.
+
+B. "Zoom"
+   Changing the width of the field of view effects a zoom effect.
+
+C. "SFactor"
+   MandelBox parameter controlling degree of box and sphere folding.
+
+E. "epsilon"
+   MandelBox parameter specifies how accurately we determine the mandelbox surface.
+   Smaller values (on the left side) result in finer resolution (and slower rendering).
+
+F. "BShip"
+   I have no mathematical abilities, but I was reading about the burning ship algorithm,
+   and how it is just like the Mandelbrot algorithm except for using the
+   absolute value of a function term.  So, in the shader I added the following :
+   v = clamp(v, -control.box.x, control.box.x) * control.box.y - v;
+   if(control.burningShip) v = -abs(v);   <<---- added this
+   Has a dramatic effect, including resemblance to the burning ship fractal in some regions.
+
+G. "Sphere"
+   Mandelbox uses three parameters to control spherical folding.
+   This widget conrols the first two.
+
+H. "S Mult"
+   Third spherical folding parameter controls the Sphere scaling factor.
+
+I. "Box"
+   Mandelbox uses two parameters to determine Box folding. Both are controlled here.
+
+J. "Julia: On, Off"
+   Toggle switch enables the Julia set style.
+
+K. "Julia XY", "JuliaZ"
+   When Julia set style is enabled these widgets control the coordinates of the Julia point.
+
+L. "Tint XY", "Tint Z"
+   Controls red, green and blue coloring.
+
+M. "Light XY", "Light Z""
+   Control Z coordinate of the light.
+
+N. "Bright", "Shiny", "Fog"
+   Control overall brightness and shniess of Mandelbox.
+   Not really fog, but a way to darken objects according to distance.
+   Lower values render faster as well.
+
+O. "Record", or "R ##"
+   Start recording. During a recording session the button shows the number of keyframes recorded.
+   Set all the widget settings as you like, then press this button to start a recording session.
+   Then use "Move" and "Rotate" widgets to navigate to a new position,
+   and press "Rec" again to store the next keyframe.
+   Note: keyframes only record the position, view direction and stereo parallax,
+   not changes you make to other widgets.
+
+P. "Play"
+   Once a least two keyframes are recorded, press this button to begin a playback session.
+   Playback automatically rewinds to the beginning.
+   Press this button a second time to stop playback.
+   Note: when playback is started, all the widgets are returned to the settings you started
+   with when making the recording.
+   But during playback, only the camera position and aim are affected;
+   you are free to change all the other widget settings as playback progresses.
+
+Q. "25" ... "1600"
+   Controls the "speed" of playback by setting the number of frames
+   that are rendered between recorded keyframes.
+   Press this button to cycle through the various settings.
+
+R. "Rsave"
+   Launch the Recording Save/Load dialog.
+
+S. "Save/Load"
+   Launch save/load dialog for widget settings.
+
+U. "Reset""
+   Reset all params.
+
+V. "S"
+   Toggle stereo mode on/off.
+   Image is rendered twice, for 'cross-eyed' 3D viewing.
+   With the iPad held two feet away, slightly cross your eyes so that there is a third image in the middle.
+   Relax your gaze, and concentrate only on that middle image, which is in 3D.
+
+Move Widget:  always shown in lower left corner except during playback.
+   Set Focus to this widget then drag finger across image to jog the camera left/right, up/down.
+
+Move Widget2:
+   Companion Move widget controls movement forward and backward.
+
+Parallax:
+   Controls the amount of stereo effect (when Stereo is active).
+   Not all vistas work well in stereo, and each may need parallax adjustment for best effect.
+   When it Does work, the results are fantastic!
+
+Rotate: always shown in lower right corner except during playback.
+   Drag anywhere to rotate camera in semi-controllable fashion. (algorithm needs work)
+
