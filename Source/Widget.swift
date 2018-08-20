@@ -5,7 +5,7 @@ enum WidgetKind { case single,dual }
 
 let limitColor    = UIColor(red:0.25, green:0.25, blue:0.2, alpha: 1)
 let fastEditColor = UIColor(red:0.2,  green:0.2,  blue:0.2, alpha: 1)
-let slowEditColor = UIColor(red:0.2,  green:0.25, blue:0.2, alpha: 1)
+let slowEditColor = UIColor(red:0.4,  green:0.2,  blue:0.2, alpha: 1)
 let textColor = UIColor.lightGray
 
 class CommonWidget: UIView {

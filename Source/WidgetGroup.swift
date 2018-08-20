@@ -448,7 +448,8 @@ class WidgetGroup: UIView {
         var pt = CGPoint()
         for touch in touches { pt = touch.location(in: self) }
         stopChanges()
-  //zorro      vc.removeAllFocus()
+        
+        if focus == NONE { vc.removeAllFocus() }
         if shouldMemorizeFocus() { previousFocus = focus }
         
         for i in 0 ..< data.count { // move Focus to this entry?
