@@ -86,45 +86,39 @@ class ViewController: UIViewController, WGDelegate {
     
     //MARK: -
     
-    let tResolution = #line // collection of unique integers
-    let tJulia = #line
-    let tBurningShip = #line
-    let tStereo = #line
-    let tRecord = #line
-    let tSpeed = #line
-    let tPlayback = #line
-    
     func initializeWidgetGroup() {
         wg.reset()
-        wg.addToggle(tResolution)
+        wg.addToggle(.resolution)
         wg.addLine()
-        wg.addSingleFloat(&control.zoom,  0.2,2, 0.03, "Zoom",.refresh)
-        wg.addSingleFloat(&control.scaleFactor,  -5.0,5.0, 0.1, "SFactor",.refresh)
-        wg.addSingleFloat(&control.epsilon,  0.00001, 0.0005, 0.0001, "epsilon",.refresh)
-        wg.addColor(tBurningShip,Float(RowHT))
+        wg.addSingleFloat(&control.zoom,  0.2,2, 0.03, "Zoom")
+        wg.addSingleFloat(&control.scaleFactor,  -5.0,5.0, 0.1, "SFactor")
+        wg.addSingleFloat(&control.epsilon,  0.00001, 0.0005, 0.0001, "epsilon")
+        wg.addColor(.burningShip,Float(RowHT))
         wg.addCommand("B Ship",.burningShip)
         wg.addLine()
-        wg.addFloat3Dual(&control.sphere, 0,2,0.03, "Sphere",.refresh)
-        wg.addSingleFloat(&control.sphereMult,  0.1,6.0,0.03, "S Mult",.refresh)
-        wg.addFloat3Dual(&control.box, 0,2,0.01, "Box",.refresh)
+        wg.addFloat3Dual(&control.sphere, 0,2,0.03, "Sphere")
         wg.addLine()
-        wg.addToggle(tJulia)
-        wg.addTriplet(&control.julia,-10,10,0.1,"Julia",.refresh)        
-        wg.addTriplet(&control.color,0,0.5,0.2,"Tint",.refresh)
-        wg.addTriplet(&control.lighting.position,-10,10,3,"Light",.refresh)
+        wg.addSingleFloat(&control.sphereMult,  0.1,6.0,0.03, "S Mult")
+        wg.addLine()
+        wg.addFloat3Dual(&control.box, 0,2,0.01, "Box")
+        wg.addLine()
+        wg.addToggle(.julia)
+        wg.addTriplet(&control.julia,-10,10,0.1,"Julia")
+        wg.addTriplet(&control.color,0,0.5,0.2,"Tint")
+        wg.addTriplet(&control.lighting.position,-10,10,3,"Light")
 
         let sPmin:Float = 0.01
         let sPmax:Float = 1
         let sPchg:Float = 0.25
-        wg.addSingleFloat(&control.lighting.diffuse,sPmin,sPmax,sPchg, "Bright",.refresh)
-        wg.addSingleFloat(&control.lighting.specular,sPmin,sPmax,sPchg, "Shiny",.refresh)
-        wg.addSingleFloat(&control.fog,0.3,2,0.2, "Fog",.refresh)
+        wg.addSingleFloat(&control.lighting.diffuse,sPmin,sPmax,sPchg, "Bright")
+        wg.addSingleFloat(&control.lighting.specular,sPmin,sPmax,sPchg, "Shiny")
+        wg.addSingleFloat(&control.fog,0.3,2,0.2, "Fog")
 
         wg.addLine()
-        wg.addToggle(tRecord)
-        wg.addColor(tPlayback,Float(RowHT))
+        wg.addToggle(.record)
+        wg.addColor(.playBack,Float(RowHT))
         wg.addCommand("Play",.playBack)
-        wg.addToggle(tSpeed)
+        wg.addToggle(.speed)
         wg.addCommand("RecSave",.recSaveLoad)
         wg.addLine()
         wg.addCommand("Save/Load",.saveLoad)
@@ -132,11 +126,13 @@ class ViewController: UIViewController, WGDelegate {
         wg.addCommand("Reset",.reset)
         wg.addLine()
         wg.addCommand("Stereo",.stereo)
+        wg.addLine()
+        wg.addSingleFloat(&control.radialAngle,0,Float.pi,0.3, "Radial S")
     }
     
     //MARK: -
     
-    func wgCommand(_ cmd: CmdIdent) {
+    func wgCommand(_ cmd: WgIdent) {
         switch(cmd) {
         case .saveLoad :
             saveLoadStyle = .settings
@@ -166,18 +162,19 @@ class ViewController: UIViewController, WGDelegate {
         wg.setNeedsDisplay()
     }
     
-    func wgToggle(_ ident:Int) {
+    func wgToggle(_ ident:WgIdent) {
         switch(ident) {
-        case tResolution :
+        case .resolution :
             isHighRes = !isHighRes
             setImageViewResolution()
             updateImage()
-        case tJulia :
+        case .julia :
             control.isJulia = !control.isJulia
             defaultJbsSettings()
-        case tRecord :
+            wg.focus += 5  // hop to companion control widgets
+        case .record :
             record.recordPressed()
-        case tSpeed :
+        case .speed :
             record.playSpeedPressed()
         default : break
         }
@@ -185,26 +182,26 @@ class ViewController: UIViewController, WGDelegate {
         wg.setNeedsDisplay()
     }
     
-    func wgGetString(_ index: Int) -> String {
-        switch index {
-        case tResolution :
+    func wgGetString(_ ident:WgIdent) -> String {
+        switch ident {
+        case .resolution :
             return isHighRes ? "Res: High" : "Res: Low"
-        case tJulia :
+        case .julia :
             return control.isJulia ? "Julia: On" : "Julia: Off"
-        case tRecord :
+        case .record :
             if record.getCount() > 0 { return String(format:"Rec %d",record.getCount()) }
             return "Record"
-        case tSpeed :
+        case .speed :
             return String(format:"%d",record.numSteps)
         default : return ""
         }
     }
 
-    func wgGetColor(_ index: Int) -> UIColor {
+    func wgGetColor(_ ident:WgIdent) -> UIColor {
         var highlight:Bool = false
-        switch(index) {
-        case tBurningShip : highlight = control.isBurningShip
-        case tPlayback : highlight = record.state == .playing
+        switch(ident) {
+        case .burningShip : highlight = control.isBurningShip
+        case .playBack : highlight = record.state == .playing
         default : break
         }
 
@@ -212,7 +209,7 @@ class ViewController: UIViewController, WGDelegate {
         return .black
     }
     
-    func wgOptionSelected(_ ident: Int, _ index: Int) {
+    func wgOptionSelected(_ ident:WgIdent, _ index: Int) {
         switch ident {
         //      case 1 : control.formula = Int32(index)
         default : break
@@ -221,7 +218,7 @@ class ViewController: UIViewController, WGDelegate {
         //        updateImage()
     }
     
-    func wgGetOptionString(_ ident: Int) -> String {
+    func wgGetOptionString(_ ident:WgIdent) -> String {
         switch ident {
         //        case 1 : return fOptions[Int(control.formula)]
         default : return "noOption"
@@ -353,14 +350,14 @@ class ViewController: UIViewController, WGDelegate {
         if wg.hasFocus() { wg.removeAllFocus() }
     }
     
-    func focusMovement(_ pt:CGPoint) {
-        if wg.hasFocus() { wg.focusMovement(pt); return }
-        if cTranslate.hasFocus { cTranslate.focusMovement(pt); return }
-        if cTranslateZ.hasFocus { cTranslateZ.focusMovement(pt); return }
-        if cRotate.hasFocus { cRotate.focusMovement(pt); return }
+    func focusMovement(_ pt:CGPoint, _ touchCount:Int = 0) {
+        if wg.hasFocus() { wg.focusMovement(pt,touchCount); return }
+        if cTranslate.hasFocus { cTranslate.focusMovement(pt,touchCount); return }
+        if cTranslateZ.hasFocus { cTranslateZ.focusMovement(pt,touchCount); return }
+        if cRotate.hasFocus { cRotate.focusMovement(pt,touchCount); return }
         if parallax.hasFocus { parallax.focusMovement(pt) }
     }
-    
+
     //MARK: -
     
     @objc func layoutViews() {
@@ -456,25 +453,7 @@ class ViewController: UIViewController, WGDelegate {
     func updateImage() {
         if isBusy { return }
         isBusy = true
-        
-        func toRectangular(_ sph:float3) -> float3 {
-            let ss = sph.x * sin(sph.z);
-            return float3( ss * cos(sph.y), ss * sin(sph.y), sph.x * cos(sph.z));
-        }
-        
-        func toSpherical(_ rec:float3) -> float3 {
-            return float3(length(rec),
-                          atan2(rec.y,rec.x),
-                          atan2(sqrt(rec.x*rec.x+rec.y*rec.y), rec.z));
-        }
-        
-        control.viewVector = control.focus - control.camera
-        control.topVector = toSpherical(control.viewVector)
-        control.topVector.z += 1.5708
-        control.topVector = toRectangular(control.topVector)
-        control.sideVector = cross(control.viewVector,control.topVector)
-        control.sideVector = normalize(control.sideVector) * length(control.topVector)
-        
+
         control.deFactor1 = abs(control.scaleFactor - 1.0);
         control.deFactor2 = pow( Float(abs(control.scaleFactor)), Float(1 - 10));
 
@@ -492,9 +471,18 @@ class ViewController: UIViewController, WGDelegate {
     //MARK: -
     
     func calcRayMarch(_ who:Int) {
+        func toRectangular(_ sph:float3) -> float3 { let ss = sph.x * sin(sph.z); return float3( ss * cos(sph.y), ss * sin(sph.y), sph.x * cos(sph.z)) }
+        func toSpherical(_ rec:float3) -> float3 { return float3(length(rec), atan2(rec.y,rec.x), atan2(sqrt(rec.x*rec.x+rec.y*rec.y), rec.z)) }
+        
         var c = control
-        if who == 0 { c.camera.x -= control.parallax }
-        if who == 1 { c.camera.x += control.parallax }
+        if who == 0 { c.camera.x -= control.parallax; c.focus.x += control.parallax } else { c.camera.x += control.parallax; c.focus.x -= control.parallax }
+        
+        c.viewVector = c.focus - c.camera
+        c.topVector = toSpherical(c.viewVector)
+        c.topVector.z += 1.5708
+        c.topVector = toRectangular(c.topVector)
+        c.sideVector = cross(c.viewVector,c.topVector)
+        c.sideVector = normalize(c.sideVector) * length(c.topVector)
         c.lighting.position = normalize(c.lighting.position)
         
         cBuffer.contents().copyMemory(from: &c, byteCount:MemoryLayout<Control>.stride)

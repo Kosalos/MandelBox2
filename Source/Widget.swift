@@ -37,7 +37,7 @@ class CommonWidget: UIView {
     
     //MARK:-
     
-    func focusMovement(_ pt:CGPoint) {
+    func focusMovement(_ pt:CGPoint, _ touchCount:Int = 0) {
         if pt.x == 0 { touched = false; return }
         
         switch widgetKind {
@@ -50,13 +50,16 @@ class CommonWidget: UIView {
                 dy /= 10
             }
         case .translate :
-            dx = Float(pt.x) / 50
+            dx = -Float(pt.x) / 50
             dy = Float(pt.y) / 50
             
             if !fastEdit {
                 dx /= 10
                 dy /= 10
             }
+            
+            if touchCount > 1 { dx *= 10; dy *= 10 }
+            
         case .translateZ :
             dy = Float(pt.y) / 25
             

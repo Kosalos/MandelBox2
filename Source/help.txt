@@ -10,7 +10,12 @@ Slide your finger up and down the list to select
 the desired widget.  Its legend will turn Green.
 
 Now on the image,
-slider your finger to control the widget's parameters.
+slide your finger to control the widget's parameters.
+
+Note: certain widget rows manage a three part parameter (x,y and z).
+The first graph displays the x,y values, the second graph displays the z value.
+Slide one finger lt/rt/up/dn to control x,y values.
+Slide two fingers to control the companion z value.
 
 Double tap on a widget legend to toggle it between
 fast and slow editing.  Red graph background = slow.
@@ -108,6 +113,15 @@ V. "S"
    Image is rendered twice, for 'cross-eyed' 3D viewing.
    With the iPad held two feet away, slightly cross your eyes so that there is a third image in the middle.
    Relax your gaze, and concentrate only on that middle image, which is in 3D.
+
+-----------------------
+Note Shown:  Radial S   (Radial Symmetry)
+Set value to 0 (far left) to disable this function,
+otherwise the setting determines the radial symmetry of the drawing.
+Sorry, this doesn't work well with Stereo mode.
+-----------------------
+
+Note: for the Movement widgets (Move, Rotate): Slide 2 fingers to Move or Rotate at 10x speed
 
 Move Widget:  always shown in lower left corner except during playback.
    Set Focus to this widget then drag finger across image to jog the camera left/right, up/down.

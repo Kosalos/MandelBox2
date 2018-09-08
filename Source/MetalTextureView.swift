@@ -9,15 +9,15 @@ class MetalTextureView: MTKView,MTKViewDelegate {
     var outTexture: MTLTexture! = nil
     let queue = DispatchQueue(label:"Q")
     var commandQueue: MTLCommandQueue! = nil
-
+    
     func initialize(_ texture:MTLTexture) {
         delegate = self
         outTexture = texture
-
+        
         let device:MTLDevice! = MTLCreateSystemDefaultDevice()
         self.device = device
         commandQueue = device.makeCommandQueue()
-
+        
         do {
             let library: MTLLibrary = try device.makeDefaultLibrary(bundle: .main)
             let descriptor: MTLRenderPipelineDescriptor = MTLRenderPipelineDescriptor()
@@ -34,13 +34,16 @@ class MetalTextureView: MTKView,MTKViewDelegate {
         let p3 = float2(0,1)
         let p4 = float2(1,1)
         vertices = device.makeBuffer(bytes: [p1,p2,p3,p4], length: 4 * MemoryLayout<float2>.stride,  options: [])
-
+        
         let descriptor: MTLSamplerDescriptor = MTLSamplerDescriptor()
         descriptor.magFilter = .nearest
         descriptor.minFilter = .nearest
         descriptor.sAddressMode = .repeat
         descriptor.tAddressMode = .repeat
         sampler = device.makeSamplerState(descriptor: descriptor)
+        
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(self.panGesture(_:)))
+        addGestureRecognizer(pan)
     }
     
     //MARK: -
@@ -65,28 +68,24 @@ class MetalTextureView: MTKView,MTKViewDelegate {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {}
     
     //MARK: -
-
+    
     var pt = CGPoint()
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
-            pt = touch.location(in: self)
-        }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
-            var npt = touch.location(in: self)
+    @objc func panGesture(_ sender: UITapGestureRecognizer) {
+        var npt = sender.location(in: self)
+        
+        switch sender.state {
+        case .began :
+            pt = npt
+        case .changed :
             npt.x -= pt.x
             npt.y -= pt.y
-            vc.focusMovement(npt)
+            vc.focusMovement(npt, sender.numberOfTouches)
+        case .ended :
+            pt.x = 0
+            pt.y = 0
+            vc.focusMovement(pt)
+        default : break
         }
     }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        pt.x = 0
-        pt.y = 0
-        vc.focusMovement(pt)
-    }
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) { touchesEnded(touches, with:event) }
 }

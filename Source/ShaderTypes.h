@@ -51,6 +51,7 @@ typedef struct {
     float fog;
     
     float deFactor1,deFactor2;
+    float radialAngle;
 }  Control;
 
 //MARK: -

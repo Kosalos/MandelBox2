@@ -108,10 +108,29 @@ kernel void mandelBoxShader
  uint2 p [[thread_position_in_grid]])
 {
     if(p.x > uint(control.xSize) || p.y > uint(control.ySize)) return;
-    
+    uint2 srcP = p;
+
+    if(control.radialAngle > 0.01) { // 0 = don't apply
+        float centerX = control.xSize/2;
+        float centerY = control.ySize/2;
+        float dx = float(p.x - centerX);
+        float dy = float(p.y - centerY);
+        
+        float angle = fabs(atan2(dy,dx));
+        
+        float dRatio = 0.01 + control.radialAngle;
+        while(angle > dRatio) angle -= dRatio;
+        if(angle > dRatio/2) angle = dRatio - angle;
+        
+        float dist = sqrt(dx * dx + dy * dy);
+        
+        srcP.x = uint(centerX + cos(angle) * dist);
+        srcP.y = uint(centerY + sin(angle) * dist);
+    }
+
     float den = float(control.xSize);
-    float dx =  control.zoom * (float(p.x)/den - 0.5);
-    float dy = -control.zoom * (float(p.y)/den - 0.5);
+    float dx =  control.zoom * (float(srcP.x)/den - 0.5);
+    float dy = -control.zoom * (float(srcP.y)/den - 0.5);
     
     float3 direction = normalize((control.sideVector * dx) + (control.topVector * dy) + control.viewVector);
     
