@@ -38,11 +38,11 @@ B. "Zoom"
 C. "SFactor"
    MandelBox parameter controlling degree of box and sphere folding.
 
-E. "epsilon"
+D. "epsilon"
    MandelBox parameter specifies how accurately we determine the mandelbox surface.
    Smaller values (on the left side) result in finer resolution (and slower rendering).
 
-F. "BShip"
+E. "BShip"
    I have no mathematical abilities, but I was reading about the burning ship algorithm,
    and how it is just like the Mandelbrot algorithm except for using the
    absolute value of a function term.  So, in the shader I added the following :
@@ -50,9 +50,12 @@ F. "BShip"
    if(control.burningShip) v = -abs(v);   <<---- added this
    Has a dramatic effect, including resemblance to the burning ship fractal in some regions.
 
-G. "Sphere"
+F. "Sphere"
    Mandelbox uses three parameters to control spherical folding.
    This widget conrols the first two.
+
+G. "Delta Sphere"
+   Two values control how Sphere Fold parameters evolve over distance.
 
 H. "S Mult"
    Third spherical folding parameter controls the Sphere scaling factor.
@@ -60,24 +63,27 @@ H. "S Mult"
 I. "Box"
    Mandelbox uses two parameters to determine Box folding. Both are controlled here.
 
-J. "Julia: On, Off"
+J. "Delta Box"
+   Two values control how Box Fold parameters evolve over distance.
+
+K. "Julia: On, Off"
    Toggle switch enables the Julia set style.
 
-K. "Julia XY", "JuliaZ"
+L. "Julia XY", "JuliaZ"
    When Julia set style is enabled these widgets control the coordinates of the Julia point.
 
-L. "Tint XY", "Tint Z"
+M. "Tint XY", "Tint Z"
    Controls red, green and blue coloring.
 
-M. "Light XY", "Light Z""
+N. "Light XY", "Light Z""
    Control Z coordinate of the light.
 
-N. "Bright", "Shiny", "Fog"
-   Control overall brightness and shniess of Mandelbox.
+O,P,Q. "Bright", "Shiny", "Fog"
+   Control overall brightness and shinyness of Mandelbox.
    Not really fog, but a way to darken objects according to distance.
    Lower values render faster as well.
 
-O. "Record", or "R ##"
+R. "Record", or "R ##"
    Start recording. During a recording session the button shows the number of keyframes recorded.
    Set all the widget settings as you like, then press this button to start a recording session.
    Then use "Move" and "Rotate" widgets to navigate to a new position,
@@ -85,7 +91,7 @@ O. "Record", or "R ##"
    Note: keyframes only record the position, view direction and stereo parallax,
    not changes you make to other widgets.
 
-P. "Play"
+S. "Play"
    Once a least two keyframes are recorded, press this button to begin a playback session.
    Playback automatically rewinds to the beginning.
    Press this button a second time to stop playback.
@@ -94,31 +100,34 @@ P. "Play"
    But during playback, only the camera position and aim are affected;
    you are free to change all the other widget settings as playback progresses.
 
-Q. "25" ... "1600"
+T. "25" ... "1600"
    Controls the "speed" of playback by setting the number of frames
    that are rendered between recorded keyframes.
    Press this button to cycle through the various settings.
 
-R. "Rsave"
+U. "Rsave"
    Launch the Recording Save/Load dialog.
 
-S. "Save/Load"
+V. "Save/Load"
    Launch save/load dialog for widget settings.
 
-U. "Reset""
+X. "Reset""
    Reset all params.
 
-V. "S"
+Y. "Stereo"
    Toggle stereo mode on/off.
    Image is rendered twice, for 'cross-eyed' 3D viewing.
    With the iPad held two feet away, slightly cross your eyes so that there is a third image in the middle.
    Relax your gaze, and concentrate only on that middle image, which is in 3D.
+   Decide which poritions of the image should be 'closer' rather than 'farther', then
+   use the Parallax widget to adjust direction and intensity of the the stereo effect.
+   You will probably have to adjust parallax whenever you Rotate the image.
 
------------------------
-Note Shown:  Radial S   (Radial Symmetry)
-Set value to 0 (far left) to disable this function,
-otherwise the setting determines the radial symmetry of the drawing.
-Sorry, this doesn't work well with Stereo mode.
+Z. "Radial S"   (Radial Symmetry)
+   Set value to 0 (far left) to disable this function,
+   otherwise the setting determines the radial symmetry of the drawing.
+   Sorry, this doesn't work well with Stereo mode.
+
 -----------------------
 
 Note: for the Movement widgets (Move, Rotate): Slide 2 fingers to Move or Rotate at 10x speed

@@ -52,6 +52,8 @@ typedef struct {
     
     float deFactor1,deFactor2;
     float radialAngle;
+    vector_float3 dBox;
+    vector_float3 dSphere;
 }  Control;
 
 //MARK: -

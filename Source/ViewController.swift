@@ -87,6 +87,7 @@ class ViewController: UIViewController, WGDelegate {
     //MARK: -
     
     func initializeWidgetGroup() {
+        let gap:Float = -10
         wg.reset()
         wg.addToggle(.resolution)
         wg.addLine()
@@ -96,14 +97,19 @@ class ViewController: UIViewController, WGDelegate {
         wg.addColor(.burningShip,Float(RowHT))
         wg.addCommand("B Ship",.burningShip)
         wg.addLine()
+        wg.addGap(gap)
         wg.addFloat3Dual(&control.sphere, 0,2,0.03, "Sphere")
-        wg.addLine()
+        wg.addFloat3Dual(&control.dSphere, 0.1,2,0.01, "△Sphere")
         wg.addSingleFloat(&control.sphereMult,  0.1,6.0,0.03, "S Mult")
         wg.addLine()
+        wg.addGap(gap)
         wg.addFloat3Dual(&control.box, 0,2,0.01, "Box")
+        wg.addFloat3Dual(&control.dBox, 0.1,2,0.01, "△Box")
         wg.addLine()
+        wg.addGap(gap)
         wg.addToggle(.julia)
         wg.addTriplet(&control.julia,-10,10,0.1,"Julia")
+        wg.addGap(gap)
         wg.addTriplet(&control.color,0,0.5,0.2,"Tint")
         wg.addTriplet(&control.lighting.position,-10,10,3,"Light")
 
@@ -115,6 +121,7 @@ class ViewController: UIViewController, WGDelegate {
         wg.addSingleFloat(&control.fog,0.3,2,0.2, "Fog")
 
         wg.addLine()
+        wg.addGap(gap)
         wg.addToggle(.record)
         wg.addColor(.playBack,Float(RowHT))
         wg.addCommand("Play",.playBack)
@@ -272,6 +279,9 @@ class ViewController: UIViewController, WGDelegate {
         control.color = float3(0.1)
         control.parallax = 0.0011
         control.fog = 3
+        
+        control.dBox = vector_float3(1,1,1)
+        control.dSphere = vector_float3(1,1,1)
         
         aData.endPosition = arcBall.matrix3fSetIdentity()
         aData.transformMatrix = matrix_float4x4.init(diagonal: float4(1,1,1,1))

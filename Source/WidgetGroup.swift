@@ -14,11 +14,11 @@ enum WgIdent { case none,refresh,reset,saveLoad,recSaveLoad,help,stereo,record,s
 
 let NONE:Int = -1
 let FontSZ:CGFloat = 20
-let RowHT:CGFloat = 21
+let RowHT:CGFloat = 24
 let GrphSZ:CGFloat = RowHT - 4
 let TxtYoff:CGFloat = -3
 let Tab1:CGFloat = 5     // graph x1
-let Tab2:CGFloat = 24    // text after graph
+let Tab2:CGFloat = 18    // text after graph
 let Tab3:CGFloat = Tab2 + GrphSZ + 3 // text after 2 graphs
 var py = CGFloat()
 

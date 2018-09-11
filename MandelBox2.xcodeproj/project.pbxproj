@@ -36,7 +36,7 @@
 		1D14906E1F9FA199004B538F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1D1490711F9FA199004B538F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1D1490731F9FA199004B538F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1D594DC6206B17F900A7EB3A /* MandelBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MandelBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D594DC6206B17F900A7EB3A /* MandelBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = MandelBox.app; path = MandelBox2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D6C3A032127855F000F7E73 /* WidgetGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetGroup.swift; sourceTree = "<group>"; };
 		1D94676120DCBD5100D20060 /* Record.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Record.m; sourceTree = "<group>"; };
 		1D94676420DD526F00D20060 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };

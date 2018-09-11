@@ -15,22 +15,27 @@ float DE    // distance estimate
     float3 v = position;
     float dr = 1.5;
     
+    Control cc = control;
+    
     for (int i = 0; i < MAX_ITERS; i++) {
-        v = clamp(v, -control.box.x, control.box.x) * control.box.y - v;
+        v = clamp(v, -cc.box.x, cc.box.x) * cc.box.y - v;
         if(control.isBurningShip) v = -abs(v);
         
         float mag = dot(v, v);
-        if(mag < control.sphere.x) {
+        if(mag < cc.sphere.x) {
             v = v * control.sphereMult;
             dr = dr * control.sphereMult;
         }
-        else if (mag < control.sphere.y) {
+        else if (mag < cc.sphere.y) {
             v = v / mag;
             dr = dr / mag;
         }
         
         v = v * control.scaleFactor + c;
         dr = dr * abs(control.scaleFactor) + 1.0;
+        
+        cc.box *= cc.dBox;
+        cc.sphere *= cc.dSphere;
     }
     
     return (length(v) - control.deFactor1) / dr - control.deFactor2;
