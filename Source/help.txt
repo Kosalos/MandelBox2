@@ -56,6 +56,8 @@ F. "Sphere"
 
 G. "Delta Sphere"
    Two values control how Sphere Fold parameters evolve over distance.
+   "Delta Delta Sph"
+   Two values control 'delta sphere' itself evolves.
 
 H. "S Mult"
    Third spherical folding parameter controls the Sphere scaling factor.
@@ -65,6 +67,8 @@ I. "Box"
 
 J. "Delta Box"
    Two values control how Box Fold parameters evolve over distance.
+   "Delta Delta Box"
+   Two values control how 'delta box' itself evolves.
 
 K. "Julia: On, Off"
    Toggle switch enables the Julia set style.

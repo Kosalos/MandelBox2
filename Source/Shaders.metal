@@ -33,9 +33,12 @@ float DE    // distance estimate
         
         v = v * control.scaleFactor + c;
         dr = dr * abs(control.scaleFactor) + 1.0;
-        
+
         cc.box *= cc.dBox;
         cc.sphere *= cc.dSphere;
+        
+        cc.dBox *= cc.ddBox;
+        cc.dSphere *= cc.ddSphere;
     }
     
     return (length(v) - control.deFactor1) / dr - control.deFactor2;
@@ -76,8 +79,6 @@ float3 lighting
         if(dotRV >= 0) color += control.lighting.specular * pow(dotRV, 2);
     }
     
-    color *= (1 - distance / control.fog);
-    
     return color;
 }
 
@@ -90,6 +91,7 @@ float3 rayMarch
 {
     float de,distance = 0.0;
     float3 position;
+    float ff = pow(control.fog,4);
 
     for(int i = 0; i < MAX_STEPS; ++i) {
         position = control.camera + rayDir * distance;
@@ -98,10 +100,13 @@ float3 rayMarch
         if(de < control.epsilon) break;
         
         distance += de;
-        if(distance > control.fog) return float3();
+        if(distance > ff) return float3();
     }
 
-    return lighting(position,distance,control);
+    float3 color = lighting(position,distance,control);
+    
+    color *= (1 - distance / ff);
+    return color;
 }
 
 //MARK: -

@@ -52,8 +52,10 @@ typedef struct {
     
     float deFactor1,deFactor2;
     float radialAngle;
-    vector_float3 dBox;
+    vector_float3 dBox;         // alter box,sphere during DE iterations
     vector_float3 dSphere;
+    vector_float3 ddBox;        // alter dBox,dSsphere
+    vector_float3 ddSphere;
 }  Control;
 
 //MARK: -

@@ -87,7 +87,7 @@ class ViewController: UIViewController, WGDelegate {
     //MARK: -
     
     func initializeWidgetGroup() {
-        let gap:Float = -10
+        let gap:Float = -20
         wg.reset()
         wg.addToggle(.resolution)
         wg.addLine()
@@ -100,11 +100,13 @@ class ViewController: UIViewController, WGDelegate {
         wg.addGap(gap)
         wg.addFloat3Dual(&control.sphere, 0,2,0.03, "Sphere")
         wg.addFloat3Dual(&control.dSphere, 0.1,2,0.01, "△Sphere")
+        wg.addFloat3Dual(&control.ddSphere, 0.1,2,0.01, "△△Sph")
         wg.addSingleFloat(&control.sphereMult,  0.1,6.0,0.03, "S Mult")
         wg.addLine()
         wg.addGap(gap)
-        wg.addFloat3Dual(&control.box, 0,2,0.01, "Box")
+        wg.addFloat3Dual(&control.box, 0.5,2.5,0.01, "Box")
         wg.addFloat3Dual(&control.dBox, 0.1,2,0.01, "△Box")
+        wg.addFloat3Dual(&control.ddBox, 0.1,2,0.01, "△△Box")
         wg.addLine()
         wg.addGap(gap)
         wg.addToggle(.julia)
@@ -118,7 +120,7 @@ class ViewController: UIViewController, WGDelegate {
         let sPchg:Float = 0.25
         wg.addSingleFloat(&control.lighting.diffuse,sPmin,sPmax,sPchg, "Bright")
         wg.addSingleFloat(&control.lighting.specular,sPmin,sPmax,sPchg, "Shiny")
-        wg.addSingleFloat(&control.fog,0.3,2,0.2, "Fog")
+        wg.addSingleFloat(&control.fog,0.7,2,0.2, "Fog")
 
         wg.addLine()
         wg.addGap(gap)
@@ -212,8 +214,7 @@ class ViewController: UIViewController, WGDelegate {
         default : break
         }
 
-        if highlight { return UIColor(red:0.2, green:0.2, blue:0, alpha:1) }
-        return .black
+        return highlight ? wgHighlightColor : wgBackgroundColor
     }
     
     func wgOptionSelected(_ ident:WgIdent, _ index: Int) {
@@ -282,7 +283,9 @@ class ViewController: UIViewController, WGDelegate {
         
         control.dBox = vector_float3(1,1,1)
         control.dSphere = vector_float3(1,1,1)
-        
+        control.ddBox = vector_float3(1,1,1)
+        control.ddSphere = vector_float3(1,1,1)
+
         aData.endPosition = arcBall.matrix3fSetIdentity()
         aData.transformMatrix = matrix_float4x4.init(diagonal: float4(1,1,1,1))
         

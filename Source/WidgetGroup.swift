@@ -12,6 +12,9 @@ protocol WGDelegate {
 enum WgEntryKind { case singleFloat,dualFloat,dropDown,option,command,toggle,legend,line,string,color,move,gap,float3Dual,float3Single,float3xy,float3z }
 enum WgIdent { case none,refresh,reset,saveLoad,recSaveLoad,help,stereo,record,speed,playBack,burningShip,resolution,julia }
 
+let wgBackgroundColor = UIColor(red:0.1, green:0.02, blue:0.02, alpha: 1)
+let wgHighlightColor = UIColor(red:0.2, green:0.2, blue:0, alpha:1)
+
 let NONE:Int = -1
 let FontSZ:CGFloat = 20
 let RowHT:CGFloat = 24
@@ -346,6 +349,9 @@ class WidgetGroup: UIView {
     override func draw(_ rect: CGRect) {
         if vc == nil { return }
         context = UIGraphicsGetCurrentContext()
+        
+        wgBackgroundColor.setFill()
+        UIBezierPath(rect:bounds).fill()
         
         py = baseYCoord()
         for i in 0 ..< data.count { drawEntry(i) }

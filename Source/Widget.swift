@@ -116,7 +116,7 @@ class CommonWidget: UIView {
         drawBorder(context!,bounds)
         
         if hasFocus {
-            context?.setLineWidth(1)
+            context?.setLineWidth(2.5)
             context!.setStrokeColor(UIColor.red.cgColor)
             drawRect(context!,bounds)
         }
