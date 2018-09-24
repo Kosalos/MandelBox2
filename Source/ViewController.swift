@@ -321,6 +321,7 @@ class ViewController: UIViewController, WGDelegate {
 
     func controlJustLoaded() {
         wg.setNeedsDisplay()
+        setImageViewResolution()
         updateImage()
     }
     

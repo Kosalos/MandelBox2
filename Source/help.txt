@@ -17,6 +17,8 @@ The first graph displays the x,y values, the second graph displays the z value.
 Slide one finger lt/rt/up/dn to control x,y values.
 Slide two fingers to control the companion z value.
 
+Note: Slide three fingers to change widget values at 10x speed.
+
 Double tap on a widget legend to toggle it between
 fast and slow editing.  Red graph background = slow.
 

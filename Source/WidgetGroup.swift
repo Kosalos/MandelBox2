@@ -448,12 +448,12 @@ class WidgetGroup: UIView {
             return
         }
         
-        let denom:Float = 1000
+        let denom:Float = touchCount > 2 ? 100 : 1000
         
         delta.y = -Float(pt.y) / denom
         
         let dx = Float(pt.x) / denom
-        if touchCount < 2 { delta.x = dx } else { delta.z = dx; delta.y = 0 } // 2 finger pan = .z of float3
+        if touchCount == 2 { delta.z = dx; delta.y = 0 } else { delta.x = dx }  // 2 finger pan = .z of float3
         
         if data[focus].kind == .singleFloat {  // largest delta runs the show
             if fabs(delta.y) > fabs(delta.x) { delta.x = delta.y }
